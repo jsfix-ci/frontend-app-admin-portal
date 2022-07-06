@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo } from 'react';
-import { Switch } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import { initializeHotjar } from '@edx/frontend-enterprise-hotjar';
 import { AuthenticatedPageRoute, PageRoute, AppProvider } from '@edx/frontend-platform/react';
@@ -87,9 +87,23 @@ const AppWrapper = () => {
           />
           <PageRoute
             path="/:enterpriseSlug"
-            component={AuthenticatedEnterpriseApp}
             authenticatedAPIClient={apiClient}
             redirect={process.env.BASE_URL}
+            render={({
+              match: {
+                url: baseUrl,
+              },
+            }) => (
+              <Switch>
+                <Route
+                  path="/:enterpriseSlug/admin/:page"
+                  component={AuthenticatedEnterpriseApp}
+                />
+                <Redirect
+                  to={`${baseUrl}/admin/learners`}
+                />
+              </Switch>
+            )}
           />
           <AuthenticatedPageRoute
             path="/"

@@ -11,7 +11,7 @@ import {
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { mergeConfig } from '@edx/frontend-platform';
-import { Router } from 'react-router-dom';
+import { Router, Route } from 'react-router-dom';
 
 import ProductTours from '../ProductTours';
 
@@ -55,26 +55,33 @@ const ToursWithContext = ({
   canManageLearnerCredit = false,
 }) => (
   <Router history={historyMock(pathname)}>
-    <Provider store={store}>
-      <EnterpriseSubsidiesContext.Provider value={{
-        canManageLearnerCredit,
-      }}
-      >
-        <SubsidyRequestsContext.Provider value={{
-          subsidyRequestConfiguration: {
-            subsidyType,
-            subsidyRequestsEnabled,
-          },
-        }}
-        >
-          <>
-            <ProductTours />
-            <p id={TOUR_TARGETS.LEARNER_CREDIT}>Learner Credit Management</p>
-            <p id={TOUR_TARGETS.SETTINGS_SIDEBAR}>Settings</p>
-          </>
-        </SubsidyRequestsContext.Provider>
-      </EnterpriseSubsidiesContext.Provider>
-    </Provider>
+    <Route
+      path={`/${ENTERPRISE_SLUG}/admin/:page`}
+      render={
+        () => (
+          <Provider store={store}>
+            <EnterpriseSubsidiesContext.Provider value={{
+              canManageLearnerCredit,
+            }}
+            >
+              <SubsidyRequestsContext.Provider value={{
+                subsidyRequestConfiguration: {
+                  subsidyType,
+                  subsidyRequestsEnabled,
+                },
+              }}
+              >
+                <>
+                  <ProductTours />
+                  <p id={TOUR_TARGETS.LEARNER_CREDIT}>Learner Credit Management</p>
+                  <p id={TOUR_TARGETS.SETTINGS_SIDEBAR}>Settings</p>
+                </>
+              </SubsidyRequestsContext.Provider>
+            </EnterpriseSubsidiesContext.Provider>
+          </Provider>
+        )
+    }
+    />
   </Router>
 );
 
