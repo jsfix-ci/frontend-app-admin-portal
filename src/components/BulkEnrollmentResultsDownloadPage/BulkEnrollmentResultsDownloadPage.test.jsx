@@ -20,7 +20,10 @@ const mockStore = configureMockStore([thunk]);
 const TEST_ENTERPRISE_SLUG = 'test-enterprise';
 const TEST_BULK_ENROLLMENT_UUID = '12345678-9012-3456-7890-123456789012';
 
-const initialHistory = createMemoryHistory({
+const initialHistory = /* TODO: JSFIX could not patch the breaking change:
+Removed relative pathname support in hash history and memory history 
+Suggested fix: Relative paths are no longer supportet by the hash/memory history, hence we recommend using the entire path name instead. */
+createMemoryHistory({
   initialEntries: [`/${TEST_ENTERPRISE_SLUG}/admin/bulk-enrollment-results/${TEST_BULK_ENROLLMENT_UUID}`],
 });
 
@@ -79,7 +82,10 @@ describe('<BulkEnrollmentResultsDownloadPage />', () => {
     const mockPromiseResolve = Promise.resolve({ data: { jobId: TEST_BULK_ENROLLMENT_UUID, downloadUrl: 'https://example.com/download' } });
     LicenseManagerApiService.fetchBulkEnrollmentJob.mockReturnValue(mockPromiseResolve);
 
-    const history = createMemoryHistory({
+    const history = /* TODO: JSFIX could not patch the breaking change:
+    Removed relative pathname support in hash history and memory history 
+    Suggested fix: Relative paths are no longer supportet by the hash/memory history, hence we recommend using the entire path name instead. */
+    createMemoryHistory({
       initialEntries: [`/${TEST_ENTERPRISE_SLUG}/admin/bulk-enrollment-results/${TEST_BULK_ENROLLMENT_UUID}`],
     });
 
