@@ -9,7 +9,10 @@ export function renderWithRouter(
   ui,
   {
     route = '/',
-    history = createMemoryHistory({ initialEntries: [route] }),
+    history = /* TODO: JSFIX could not patch the breaking change:
+    Removed relative pathname support in hash history and memory history 
+    Suggested fix: Relative paths are no longer supportet by the hash/memory history, hence we recommend using the entire path name instead. */
+    createMemoryHistory({ initialEntries: [route] }),
   } = {},
 ) {
   // eslint-disable-next-line react/prop-types

@@ -19,7 +19,10 @@ const mockEnterpriseCustomer = {
   uuid: 'dc3bfcf8-c61f-11ec-9d64-0242ac120002',
 };
 
-const history = createMemoryHistory({
+const history = /* TODO: JSFIX could not patch the breaking change:
+Removed relative pathname support in hash history and memory history 
+Suggested fix: Relative paths are no longer supportet by the hash/memory history, hence we recommend using the entire path name instead. */
+createMemoryHistory({
   initialEntries: [`/${TEST_ENTERPRISE_SLUG}/admin/register`],
 });
 const AdminRegisterPageWrapper = ({
